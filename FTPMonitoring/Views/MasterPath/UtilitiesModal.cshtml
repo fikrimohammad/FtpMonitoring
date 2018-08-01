@@ -1,0 +1,31 @@
+﻿
+<div class="modal fade" id="MasterPathModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="modalTitle">Formulir Penambahan Data Master Path</h4>
+            </div>
+            <div class="modal-body">
+                <div id="errorMessage"></div>
+                <form id="MasterPathForm">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="id">ID Path</label>
+                        <input type="text" class="form-control" id="id" placeholder="ID Path" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nama Path</label>
+                        <input type="text" class="form-control" id="name" placeholder="Nama Path" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" id="btnAdd" onclick="addMasterPath();">Tambah</a>
+                <a class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="updateMasterPath();">Perbarui</a>
+                <a class="btn btn-danger" id="btnDelete" style="display:none;" onclick="deleteMasterPath();">Hapus</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>

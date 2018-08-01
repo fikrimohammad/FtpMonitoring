@@ -1,0 +1,664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FtpMonitoringModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HistoryMonitoringLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileId" Type="int" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="MonitoringLogDate" Type="date" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FileModifiedDatetime" Type="datetime" />
+          <Property Name="ETLRunDatetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MasterBatchFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PathName" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="MasterFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SroId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="MasterPath">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MasterPatternExtension">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="MasterSRO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MasterStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatternExtensionId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MonitoringConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="PathId" Type="int" />
+          <Property Name="BatchFileId" Type="int" />
+        </EntityType>
+        <EntityType Name="MonitoringLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileId" Type="int" />
+        </EntityType>
+        <EntityType Name="MonitoringLogDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="MonitoringLogId" Type="int" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FileModifiedDatetime" Type="datetime" />
+          <Property Name="ETLRunDatetime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_HistoryMonitoringLog_MasterFile">
+          <End Role="MasterFile" Type="Self.MasterFile" Multiplicity="0..1" />
+          <End Role="HistoryMonitoringLog" Type="Self.HistoryMonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryMonitoringLog">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryMonitoringLog_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatus" Multiplicity="0..1" />
+          <End Role="HistoryMonitoringLog" Type="Self.HistoryMonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryMonitoringLog">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterFile_MasterSRO">
+          <End Role="MasterSRO" Type="Self.MasterSRO" Multiplicity="0..1" />
+          <End Role="MasterFile" Type="Self.MasterFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterSRO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MasterFile">
+              <PropertyRef Name="SroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterStatus_MasterPatternExtension">
+          <End Role="MasterPatternExtension" Type="Self.MasterPatternExtension" Multiplicity="0..1" />
+          <End Role="MasterStatus" Type="Self.MasterStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPatternExtension">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MasterStatus">
+              <PropertyRef Name="PatternExtensionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterBatchFile">
+          <End Role="MasterBatchFile" Type="Self.MasterBatchFile" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterBatchFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="BatchFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterPath">
+          <End Role="MasterPath" Type="Self.MasterPath" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPath">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="PathId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatus" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringLog_MasterFile">
+          <End Role="MasterFile" Type="Self.MasterFile" Multiplicity="0..1" />
+          <End Role="MonitoringLog" Type="Self.MonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLog">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringLogDetail_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatus" Multiplicity="0..1" />
+          <End Role="MonitoringLogDetail" Type="Self.MonitoringLogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLogDetail">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringLogDetail_MonitoringLog">
+          <End Role="MonitoringLog" Type="Self.MonitoringLog" Multiplicity="0..1" />
+          <End Role="MonitoringLogDetail" Type="Self.MonitoringLogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonitoringLog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLogDetail">
+              <PropertyRef Name="MonitoringLogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FtpMonitoringModelStoreContainer">
+          <EntitySet Name="HistoryMonitoringLog" EntityType="Self.HistoryMonitoringLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterBatchFile" EntityType="Self.MasterBatchFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterFile" EntityType="Self.MasterFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterPath" EntityType="Self.MasterPath" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterPatternExtension" EntityType="Self.MasterPatternExtension" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterSRO" EntityType="Self.MasterSRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterStatus" EntityType="Self.MasterStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonitoringConfiguration" EntityType="Self.MonitoringConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonitoringLog" EntityType="Self.MonitoringLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonitoringLogDetail" EntityType="Self.MonitoringLogDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HistoryMonitoringLog_MasterFile" Association="Self.FK_HistoryMonitoringLog_MasterFile">
+            <End Role="MasterFile" EntitySet="MasterFile" />
+            <End Role="HistoryMonitoringLog" EntitySet="HistoryMonitoringLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryMonitoringLog_MasterStatus" Association="Self.FK_HistoryMonitoringLog_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="HistoryMonitoringLog" EntitySet="HistoryMonitoringLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterFile_MasterSRO" Association="Self.FK_MasterFile_MasterSRO">
+            <End Role="MasterSRO" EntitySet="MasterSRO" />
+            <End Role="MasterFile" EntitySet="MasterFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterStatus_MasterPatternExtension" Association="Self.FK_MasterStatus_MasterPatternExtension">
+            <End Role="MasterPatternExtension" EntitySet="MasterPatternExtension" />
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterBatchFile" Association="Self.FK_MonitoringConfiguration_MasterBatchFile">
+            <End Role="MasterBatchFile" EntitySet="MasterBatchFile" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterPath" Association="Self.FK_MonitoringConfiguration_MasterPath">
+            <End Role="MasterPath" EntitySet="MasterPath" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterStatus" Association="Self.FK_MonitoringConfiguration_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringLog_MasterFile" Association="Self.FK_MonitoringLog_MasterFile">
+            <End Role="MasterFile" EntitySet="MasterFile" />
+            <End Role="MonitoringLog" EntitySet="MonitoringLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringLogDetail_MasterStatus" Association="Self.FK_MonitoringLogDetail_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="MonitoringLogDetail" EntitySet="MonitoringLogDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringLogDetail_MonitoringLog" Association="Self.FK_MonitoringLogDetail_MonitoringLog">
+            <End Role="MonitoringLog" EntitySet="MonitoringLog" />
+            <End Role="MonitoringLogDetail" EntitySet="MonitoringLogDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FtpMonitoringModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HistoryMonitoringLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileId" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="MonitoringLogDate" Type="DateTime" Precision="0" />
+          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FileModifiedDatetime" Type="DateTime" Precision="3" />
+          <Property Name="ETLRunDatetime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MasterFile" Relationship="Self.FK_HistoryMonitoringLog_MasterFile" FromRole="HistoryMonitoringLog" ToRole="MasterFile" />
+          <NavigationProperty Name="MasterStatu" Relationship="Self.FK_HistoryMonitoringLog_MasterStatus" FromRole="HistoryMonitoringLog" ToRole="MasterStatus" />
+        </EntityType>
+        <EntityType Name="MasterBatchFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PathName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MonitoringConfigurations" Relationship="Self.FK_MonitoringConfiguration_MasterBatchFile" FromRole="MasterBatchFile" ToRole="MonitoringConfiguration" />
+        </EntityType>
+        <EntityType Name="MasterFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SroId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HistoryMonitoringLogs" Relationship="Self.FK_HistoryMonitoringLog_MasterFile" FromRole="MasterFile" ToRole="HistoryMonitoringLog" />
+          <NavigationProperty Name="MasterSRO" Relationship="Self.FK_MasterFile_MasterSRO" FromRole="MasterFile" ToRole="MasterSRO" />
+          <NavigationProperty Name="MonitoringLogs" Relationship="FtpMonitoringModel.FK_MonitoringLog_MasterFile" FromRole="MasterFile" ToRole="MonitoringLog" />
+        </EntityType>
+        <EntityType Name="MasterPath">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MonitoringConfigurations" Relationship="Self.FK_MonitoringConfiguration_MasterPath" FromRole="MasterPath" ToRole="MonitoringConfiguration" />
+        </EntityType>
+        <EntityType Name="MasterPatternExtension">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MasterStatus" Relationship="Self.FK_MasterStatus_MasterPatternExtension" FromRole="MasterPatternExtension" ToRole="MasterStatus" />
+        </EntityType>
+        <EntityType Name="MasterSRO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MasterFiles" Relationship="Self.FK_MasterFile_MasterSRO" FromRole="MasterSRO" ToRole="MasterFile" />
+        </EntityType>
+        <EntityType Name="MasterStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatternExtensionId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HistoryMonitoringLogs" Relationship="Self.FK_HistoryMonitoringLog_MasterStatus" FromRole="MasterStatus" ToRole="HistoryMonitoringLog" />
+          <NavigationProperty Name="MasterPatternExtension" Relationship="Self.FK_MasterStatus_MasterPatternExtension" FromRole="MasterStatus" ToRole="MasterPatternExtension" />
+          <NavigationProperty Name="MonitoringConfigurations" Relationship="Self.FK_MonitoringConfiguration_MasterStatus" FromRole="MasterStatus" ToRole="MonitoringConfiguration" />
+          <NavigationProperty Name="MonitoringLogDetails" Relationship="Self.FK_MonitoringLogDetail_MasterStatus" FromRole="MasterStatus" ToRole="MonitoringLogDetail" />
+        </EntityType>
+        <EntityType Name="MonitoringConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="PathId" Type="Int32" />
+          <Property Name="BatchFileId" Type="Int32" />
+          <NavigationProperty Name="MasterBatchFile" Relationship="Self.FK_MonitoringConfiguration_MasterBatchFile" FromRole="MonitoringConfiguration" ToRole="MasterBatchFile" />
+          <NavigationProperty Name="MasterPath" Relationship="Self.FK_MonitoringConfiguration_MasterPath" FromRole="MonitoringConfiguration" ToRole="MasterPath" />
+          <NavigationProperty Name="MasterStatu" Relationship="Self.FK_MonitoringConfiguration_MasterStatus" FromRole="MonitoringConfiguration" ToRole="MasterStatus" />
+        </EntityType>
+        <EntityType Name="MonitoringLogDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="MonitoringLogId" Type="Int32" />
+          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FileModifiedDatetime" Type="DateTime" Precision="3" />
+          <Property Name="ETLRunDatetime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MasterStatu" Relationship="Self.FK_MonitoringLogDetail_MasterStatus" FromRole="MonitoringLogDetail" ToRole="MasterStatus" />
+          <NavigationProperty Name="MonitoringLog" Relationship="FtpMonitoringModel.FK_MonitoringLogDetail_MonitoringLog" FromRole="MonitoringLogDetail" ToRole="MonitoringLog" />
+        </EntityType>
+        <Association Name="FK_HistoryMonitoringLog_MasterFile">
+          <End Role="MasterFile" Type="Self.MasterFile" Multiplicity="0..1" />
+          <End Role="HistoryMonitoringLog" Type="Self.HistoryMonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryMonitoringLog">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryMonitoringLog_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatu" Multiplicity="0..1" />
+          <End Role="HistoryMonitoringLog" Type="Self.HistoryMonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryMonitoringLog">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterBatchFile">
+          <End Role="MasterBatchFile" Type="Self.MasterBatchFile" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterBatchFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="BatchFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterFile_MasterSRO">
+          <End Role="MasterSRO" Type="Self.MasterSRO" Multiplicity="0..1" />
+          <End Role="MasterFile" Type="Self.MasterFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterSRO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MasterFile">
+              <PropertyRef Name="SroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterPath">
+          <End Role="MasterPath" Type="Self.MasterPath" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPath">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="PathId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterStatus_MasterPatternExtension">
+          <End Role="MasterPatternExtension" Type="Self.MasterPatternExtension" Multiplicity="0..1" />
+          <End Role="MasterStatus" Type="Self.MasterStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPatternExtension">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MasterStatus">
+              <PropertyRef Name="PatternExtensionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringConfiguration_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatu" Multiplicity="0..1" />
+          <End Role="MonitoringConfiguration" Type="Self.MonitoringConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringConfiguration">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringLogDetail_MasterStatus">
+          <End Role="MasterStatus" Type="Self.MasterStatu" Multiplicity="0..1" />
+          <End Role="MonitoringLogDetail" Type="Self.MonitoringLogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLogDetail">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FtpMonitoringEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HistoryMonitoringLogs" EntityType="Self.HistoryMonitoringLog" />
+          <EntitySet Name="MasterBatchFiles" EntityType="Self.MasterBatchFile" />
+          <EntitySet Name="MasterFiles" EntityType="Self.MasterFile" />
+          <EntitySet Name="MasterPaths" EntityType="Self.MasterPath" />
+          <EntitySet Name="MasterPatternExtensions" EntityType="Self.MasterPatternExtension" />
+          <EntitySet Name="MasterSROes" EntityType="Self.MasterSRO" />
+          <EntitySet Name="MasterStatus" EntityType="Self.MasterStatu" />
+          <EntitySet Name="MonitoringConfigurations" EntityType="Self.MonitoringConfiguration" />
+          <EntitySet Name="MonitoringLogDetails" EntityType="Self.MonitoringLogDetail" />
+          <AssociationSet Name="FK_HistoryMonitoringLog_MasterFile" Association="Self.FK_HistoryMonitoringLog_MasterFile">
+            <End Role="MasterFile" EntitySet="MasterFiles" />
+            <End Role="HistoryMonitoringLog" EntitySet="HistoryMonitoringLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryMonitoringLog_MasterStatus" Association="Self.FK_HistoryMonitoringLog_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="HistoryMonitoringLog" EntitySet="HistoryMonitoringLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterBatchFile" Association="Self.FK_MonitoringConfiguration_MasterBatchFile">
+            <End Role="MasterBatchFile" EntitySet="MasterBatchFiles" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfigurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterFile_MasterSRO" Association="Self.FK_MasterFile_MasterSRO">
+            <End Role="MasterSRO" EntitySet="MasterSROes" />
+            <End Role="MasterFile" EntitySet="MasterFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterPath" Association="Self.FK_MonitoringConfiguration_MasterPath">
+            <End Role="MasterPath" EntitySet="MasterPaths" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfigurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterStatus_MasterPatternExtension" Association="Self.FK_MasterStatus_MasterPatternExtension">
+            <End Role="MasterPatternExtension" EntitySet="MasterPatternExtensions" />
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringConfiguration_MasterStatus" Association="Self.FK_MonitoringConfiguration_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="MonitoringConfiguration" EntitySet="MonitoringConfigurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringLogDetail_MasterStatus" Association="Self.FK_MonitoringLogDetail_MasterStatus">
+            <End Role="MasterStatus" EntitySet="MasterStatus" />
+            <End Role="MonitoringLogDetail" EntitySet="MonitoringLogDetails" />
+          </AssociationSet>
+          <EntitySet Name="MonitoringLogs" EntityType="FtpMonitoringModel.MonitoringLog" />
+          <AssociationSet Name="FK_MonitoringLog_MasterFile" Association="FtpMonitoringModel.FK_MonitoringLog_MasterFile">
+            <End Role="MasterFile" EntitySet="MasterFiles" />
+            <End Role="MonitoringLog" EntitySet="MonitoringLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonitoringLogDetail_MonitoringLog" Association="FtpMonitoringModel.FK_MonitoringLogDetail_MonitoringLog">
+            <End Role="MonitoringLog" EntitySet="MonitoringLogs" />
+            <End Role="MonitoringLogDetail" EntitySet="MonitoringLogDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MonitoringLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileId" Type="Int32" />
+          <NavigationProperty Name="MasterFile" Relationship="FtpMonitoringModel.FK_MonitoringLog_MasterFile" FromRole="MonitoringLog" ToRole="MasterFile" />
+          <NavigationProperty Name="MonitoringLogDetails" Relationship="FtpMonitoringModel.FK_MonitoringLogDetail_MonitoringLog" FromRole="MonitoringLog" ToRole="MonitoringLogDetail" />
+        </EntityType>
+        <Association Name="FK_MonitoringLog_MasterFile">
+          <End Type="FtpMonitoringModel.MasterFile" Role="MasterFile" Multiplicity="0..1" />
+          <End Type="FtpMonitoringModel.MonitoringLog" Role="MonitoringLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLog">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonitoringLogDetail_MonitoringLog">
+          <End Type="FtpMonitoringModel.MonitoringLog" Role="MonitoringLog" Multiplicity="0..1" />
+          <End Type="FtpMonitoringModel.MonitoringLogDetail" Role="MonitoringLogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonitoringLog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonitoringLogDetail">
+              <PropertyRef Name="MonitoringLogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FtpMonitoringModelStoreContainer" CdmEntityContainer="FtpMonitoringEntities">
+          <EntitySetMapping Name="HistoryMonitoringLogs">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.HistoryMonitoringLog">
+              <MappingFragment StoreEntitySet="HistoryMonitoringLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="MonitoringLogDate" ColumnName="MonitoringLogDate" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileModifiedDatetime" ColumnName="FileModifiedDatetime" />
+                <ScalarProperty Name="ETLRunDatetime" ColumnName="ETLRunDatetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterBatchFiles">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterBatchFile">
+              <MappingFragment StoreEntitySet="MasterBatchFile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PathName" ColumnName="PathName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterFiles">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterFile">
+              <MappingFragment StoreEntitySet="MasterFile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SroId" ColumnName="SroId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterPaths">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterPath">
+              <MappingFragment StoreEntitySet="MasterPath">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterPatternExtensions">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterPatternExtension">
+              <MappingFragment StoreEntitySet="MasterPatternExtension">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterSROes">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterSRO">
+              <MappingFragment StoreEntitySet="MasterSRO">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterStatus">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MasterStatu">
+              <MappingFragment StoreEntitySet="MasterStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatternExtensionId" ColumnName="PatternExtensionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonitoringConfigurations">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MonitoringConfiguration">
+              <MappingFragment StoreEntitySet="MonitoringConfiguration">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="BatchFileId" ColumnName="BatchFileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonitoringLogDetails">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MonitoringLogDetail">
+              <MappingFragment StoreEntitySet="MonitoringLogDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="MonitoringLogId" ColumnName="MonitoringLogId" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileModifiedDatetime" ColumnName="FileModifiedDatetime" />
+                <ScalarProperty Name="ETLRunDatetime" ColumnName="ETLRunDatetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonitoringLogs">
+            <EntityTypeMapping TypeName="FtpMonitoringModel.MonitoringLog">
+              <MappingFragment StoreEntitySet="MonitoringLog">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

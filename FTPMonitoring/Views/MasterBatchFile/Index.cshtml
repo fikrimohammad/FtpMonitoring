@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section style
+{
+    <style type="text/css">
+        .content-wrapper {
+            margin-left: 0px;
+        }
+
+        .modal {
+            text-align: center;
+        }
+
+        @@media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Pengelolaan Data Master
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="box box-danger">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-6"><h3 class="box-title">Pengelolaan Data Master BatchFile</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#MasterBatchFileModal" onclick="clearTextBox();" style="margin-bottom: 15px;">
+                            <i class="fa fa-plus-square" style="margin-right: 5px;"></i> Tambah Data Master BatchFile
+                        </button>
+                        <table id="MasterBatchFileDatatables" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID BatchFile</th>
+                                    <th>Nama BatchFile</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@RenderPage("UtilitiesModal.cshtml")
+
+@section Script
+{
+    <script type="text/javascript" src="~/Scripts/master-batch.js"></script>
+}

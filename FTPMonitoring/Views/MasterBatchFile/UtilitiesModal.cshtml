@@ -1,0 +1,31 @@
+﻿
+<div class="modal fade" id="MasterBatchFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="modalTitle">Formulir Penambahan Data Master BatchFile</h4>
+            </div>
+            <div class="modal-body">
+                <div id="errorMessage"></div>
+                <form id="MasterBatchFileForm">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="id">ID BatchFile</label>
+                        <input type="text" class="form-control" id="id" placeholder="ID BatchFile" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nama BatchFile</label>
+                        <input type="text" class="form-control" id="name" placeholder="Nama BatchFile" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" id="btnAdd" onclick="addMasterBatchFile();">Tambah</a>
+                <a class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="updateMasterBatchFile();">Perbarui</a>
+                <a class="btn btn-danger" id="btnDelete" style="display:none;" onclick="deleteMasterBatchFile();">Hapus</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>  

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e958885e6f3a402bad350421b749f11d" Name="Diagram1">
+        <EntityTypeShape EntityType="FtpMonitoringModel.HistoryMonitoringLog" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterBatchFile" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterFile" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterPath" Width="1.5" PointX="6" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterPatternExtension" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterSRO" Width="1.5" PointX="1.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MasterStatu" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MonitoringConfiguration" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MonitoringLogDetail" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_HistoryMonitoringLog_MasterFile" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_HistoryMonitoringLog_MasterStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringConfiguration_MasterBatchFile" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MasterFile_MasterSRO" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringConfiguration_MasterPath" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MasterStatus_MasterPatternExtension" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringConfiguration_MasterStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringLogDetail_MasterStatus" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FtpMonitoringModel.MonitoringLog" Width="1.5" PointX="3" PointY="0.5" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringLog_MasterFile" />
+        <AssociationConnector Association="FtpMonitoringModel.FK_MonitoringLogDetail_MonitoringLog" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
