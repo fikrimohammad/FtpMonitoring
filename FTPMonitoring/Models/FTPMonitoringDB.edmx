@@ -208,6 +208,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spListHistoryMonitoringLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fileId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="FtpMonitoringModelStoreContainer">
           <EntitySet Name="HistoryMonitoringLog" EntityType="Self.HistoryMonitoringLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterBatchFile" EntityType="Self.MasterBatchFile" Schema="dbo" store:Type="Tables" />
@@ -505,6 +508,9 @@
             <End Role="MonitoringLog" EntitySet="MonitoringLogs" />
             <End Role="MonitoringLogDetail" EntitySet="MonitoringLogDetails" />
           </AssociationSet>
+          <FunctionImport Name="spListHistoryMonitoringLogs" ReturnType="Collection(FtpMonitoringModel.spListHistoryMonitoringLogs_Result)">
+            <Parameter Name="fileId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="MonitoringLog">
           <Key>
@@ -539,6 +545,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spListHistoryMonitoringLogs_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="MonitoringLogDate" Nullable="true" />
+          <Property Type="String" Name="FileTemplateName" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="FileName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="FileModifiedDatetime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FileStatus" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ETLRunDatetime" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -638,6 +653,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spListHistoryMonitoringLogs" FunctionName="FtpMonitoringModel.Store.spListHistoryMonitoringLogs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FtpMonitoringModel.spListHistoryMonitoringLogs_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MonitoringLogDate" ColumnName="MonitoringLogDate" />
+                <ScalarProperty Name="FileTemplateName" ColumnName="FileTemplateName" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileModifiedDatetime" ColumnName="FileModifiedDatetime" />
+                <ScalarProperty Name="FileStatus" ColumnName="FileStatus" />
+                <ScalarProperty Name="ETLRunDatetime" ColumnName="ETLRunDatetime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

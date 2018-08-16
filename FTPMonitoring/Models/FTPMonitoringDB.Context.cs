@@ -12,6 +12,8 @@ namespace FTPMonitoring.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class FtpMonitoringEntities : DbContext
     {
@@ -35,5 +37,14 @@ namespace FTPMonitoring.Models
         public virtual DbSet<MonitoringConfiguration> MonitoringConfigurations { get; set; }
         public virtual DbSet<MonitoringLogDetail> MonitoringLogDetails { get; set; }
         public virtual DbSet<MonitoringLog> MonitoringLogs { get; set; }
+    
+        public virtual ObjectResult<spListHistoryMonitoringLogs_Result> spListHistoryMonitoringLogs(Nullable<int> fileId)
+        {
+            var fileIdParameter = fileId.HasValue ?
+                new ObjectParameter("fileId", fileId) :
+                new ObjectParameter("fileId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spListHistoryMonitoringLogs_Result>("spListHistoryMonitoringLogs", fileIdParameter);
+        }
     }
 }

@@ -29,7 +29,6 @@ function LoadMonitoringLogs(id) {
         contentType: "application/json;charset=UTF-8",
         dataType: "JSON",
         success: function (result) {
-            console.log(result);
             RenderMonitoringLogView(sroId, result);
         }
     });
@@ -51,14 +50,12 @@ function LoadMonitoringLogDetail(id) {
 
 function RenderMonitoringLogView(sroId, monitoringLogCollections) {
     var monitoringLogHTML, masterFileId, fileName, fileStatus, fileDetail;
-    rowCount = 0;
     $.each(monitoringLogCollections,
         function () {
             $.each(this,
                 function (index, value) {
                     if (value.monitoringLogDetailCount > 0) {
                         fileDetail = JSON.parse(LoadMonitoringLogDetail(value.monitoringLogId));
-                        console.log(fileDetail);
                         $.each(fileDetail,
                             function (index, value) {
                                 masterFileId = value.fileTemplateId;
@@ -71,23 +68,28 @@ function RenderMonitoringLogView(sroId, monitoringLogCollections) {
                         fileName = value.fileTemplateName;
                         fileStatus = "Tidak Ada Proses Monitoring";
                     }
-                    monitoringLogHTML = " <div class=\"col-md-3\"> " +
+                    monitoringLogHTML = " <div class=\"col-md-3 text-center\"> " +
                         "     <div class=\"row pt-5\"> " +
                         "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"> " +
-                        fileName +
+                                    fileName +
                         "         </div> " +
                         "     </div>" +
                         "     <div class=\"row pt-5\"> " +
                         "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"> " +
-                        "             <i class=\"fa fa-file-zip-o fa-3x\" onclick=\"showHistoryModal(" +
-                        masterFileId +
-                        ")\"></i></br>" +
+                        "             <i class=\"fa fa-file-zip-o fa-3x\")></i></br>" +
                         "         </div> " +
                         "     </div>" +
                         "     <div class=\"row pt-5\"> " +
-                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"> " +
+                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 \"> " +
                         "             <div class=\"label label-info\"> " +
-                        fileStatus +
+                                        fileStatus +
+                        "             </div>" +
+                        "         </div> " +
+                        "     </div>" +
+                        "     <div class=\"row pt-5\"> " +
+                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 \"> " +
+                        "             <div class=\"btn btn-danger\" onclick=\"showHistoryModal(" + masterFileId + ")\">" +
+                        "               Lihat Historis " +        
                         "             </div>" +
                         "         </div> " +
                         "     </div>" +

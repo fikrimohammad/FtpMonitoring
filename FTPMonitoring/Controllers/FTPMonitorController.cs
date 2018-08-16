@@ -58,16 +58,7 @@ namespace FTPMonitoring.Controllers
 	    {
 		    using (_con)
 		    {
-			    var historyMonitoringLogs = _con.HistoryMonitoringLogs.Where(x => x.FileId == fileTemplateId).
-				    Select(y => new
-			    {
-					monitoringLogDate = y.MonitoringLogDate,
-					fileTemplateName = y.MasterFile.Name,
-					fileName = y.FileName,
-					fileModifiedDatetime = y.FileModifiedDatetime,
-					fileStatus = y.MasterStatu.Name,
-					etlRunDatetime = y.ETLRunDatetime
-			    }).ToList();
+			    var historyMonitoringLogs = _con.spListHistoryMonitoringLogs(fileTemplateId).ToList();
 			    return Json(new { data = historyMonitoringLogs }, JsonRequestBehavior.AllowGet);
 			}
 		   

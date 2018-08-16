@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e958885e6f3a402bad350421b749f11d" Name="Diagram1">
+      <Diagram DiagramId="e958885e6f3a402bad350421b749f11d" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="FtpMonitoringModel.HistoryMonitoringLog" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FtpMonitoringModel.MasterBatchFile" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="FtpMonitoringModel.MasterFile" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
