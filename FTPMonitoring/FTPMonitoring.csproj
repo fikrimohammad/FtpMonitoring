@@ -223,9 +223,15 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\master-batch-file.js" />
+    <Content Include="Scripts\master-path.js" />
     <Content Include="Scripts\master-sro.js" />
     <Content Include="Scripts\master-status.js" />
     <Content Include="Scripts\master-file.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\tether.js" />
     <Content Include="Scripts\tether.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -303,6 +309,9 @@
       <DependentUpon>FTPMonitoringDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MonitoringLogDetail.cs">
+      <DependentUpon>FTPMonitoringDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spListHistoryMonitoringLogs_Result.cs">
       <DependentUpon>FTPMonitoringDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UpdateMasterBatchFileViewModel.cs" />

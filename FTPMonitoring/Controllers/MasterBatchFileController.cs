@@ -25,17 +25,26 @@ namespace FTPMonitoring.Controllers
         {
             using (_con)
             {
-                var listBatchFile = _con.MasterBatchFiles.OrderBy(s => s.PathName).Select(x => new { Id = x.Id, Name = x.PathName }).ToList();
-                return Json(new { data = listBatchFile }, JsonRequestBehavior.AllowGet);
+	            var batchFiles = _con.MasterBatchFiles.Select(x => new
+	            {
+					Id = x.Id,
+					PathName = x.PathName
+	            }).ToList();
+	            return Json(new { data = batchFiles }, JsonRequestBehavior.AllowGet);
             }
         }
         [WebMethod]
-        public JsonResult GetBatchFile(int statId)
+        public JsonResult GetBatchFile(int batchFileId)
         {
             using (_con)
             {
-                var status = _con.MasterBatchFiles.FirstOrDefault(s => s.Id == statId);
-                return Json(new { data = status });
+                var batchFile = _con.MasterBatchFiles.Where(x => x.Id == batchFileId).
+	                Select(x => new
+                {
+					Id = x.Id,
+					PathName = x.PathName
+                }).First();
+                return Json(new { data = batchFile }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -98,12 +107,12 @@ namespace FTPMonitoring.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int statId)
+        public ActionResult Delete(int batchFileId)
         {
             bool status = false;
             using (_con)
             {
-                var masterBatchFile = _con.MasterBatchFiles.FirstOrDefault(s => s.Id == statId);
+                var masterBatchFile = _con.MasterBatchFiles.FirstOrDefault(x => x.Id == batchFileId);
                 if (masterBatchFile != null)
                 {
                     _con.MasterBatchFiles.Remove(masterBatchFile);

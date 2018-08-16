@@ -1,31 +1,31 @@
 ﻿$(document).ready(function () {
-    listMasterSro();
+    listMasterBatchFile();
 });
 
-/* Fungsi Untuk Memanggil Datatable Master SRO */
-function listMasterSro() {
-    $("#MasterSRODatatables").dataTable({
+/* Fungsi Untuk Memanggil Datatable Master BatchFile */
+function listMasterBatchFile() {
+    $("#MasterBatchFileDatatables").dataTable({
         language: {
-            searchPlaceholder: "Cari Nama SRO"
+            searchPlaceholder: "Cari Nama Path Dari Batch File"
         },
         ajax: {
-            "url": "/MasterSRO/ListSro",
+            "url": "/MasterBatchFile/ListBatchFile",
             "dataType": "JSON",
             "type": "GET"
         },
         columns: [
             { data: "Id", searchable: false },
-            { data: "Name" },
+            { data: "PathName" },
             {
                 data: "Id", searchable: false, orderable: false,
                 render: function (data) {
-                    return "<a href=\"#\" class=\"btn btn-primary\" style=\"margin-right:10px;\" onclick=\"getMasterSRO(1, " + data + ")\">" +
+                    return "<a href=\"#\" class=\"btn btn-primary\" style=\"margin-right:10px;\" onclick=\"getMasterBatchFile(1, " + data + ")\">" +
                         "<i class=\"fa fa-edit\" style=\"margin-right: 5px;\"></i>Ubah" +
                         "</a>" +
-                        "<a href=\"#\" class=\"btn btn-info\" style=\"margin-right:10px;\" onclick=\"getMasterSRO(2, " + data + ")\">" +
+                        "<a href=\"#\" class=\"btn btn-info\" style=\"margin-right:10px;\" onclick=\"getMasterBatchFile(2, " + data + ")\">" +
                         "<i class=\"fa fa-info\" style=\"margin-right: 5px;\"></i>Lihat" +
                         "</a>" +
-                        "<a href=\"#\" class=\"btn btn-danger\" onclick=\"getMasterSRO(3, " + data + ")\">" +
+                        "<a href=\"#\" class=\"btn btn-danger\" onclick=\"getMasterBatchFile(3, " + data + ")\">" +
                         "<i class=\"fa fa-trash-o\" style=\"margin-right: 5px;\"></i>Hapus" +
                         "</a>";
                 }
@@ -34,26 +34,26 @@ function listMasterSro() {
     });
 }
 
-/* Fungsi Untuk Menambahkan Data Master SRO */
-function addMasterSRO() {
-    var form = $("#MasterSROForm");
+/* Fungsi Untuk Menambahkan Data Master BatchFile */
+function addMasterBatchFile() {
+    var form = $("#MasterBatchFileForm");
 
     /* Variabel Untuk Menyimpan CSRF Token */
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
     /* Variabel Dalam Bentuk Objek Untuk Menyimpan Hasil Input Dari User
-    * Terkait Data Master SRO Yang Akan Ditambahkan 
+    * Terkait Data Master BatchFile Yang Akan Ditambahkan
     */
-    var sroObj = {
-        "Name": $("#name").val()           // Index Untuk Menyimpan Nama SRO
+    var batchFileObj = {
+        "Name": $("#name").val()           // Index Untuk Menyimpan Nama BatchFile
     };
 
-    /* Operasi AJAX Untuk Create Master SRO */
+    /* Operasi AJAX Untuk Create Master BatchFile */
     $.ajax({
-        url: "/MasterSRO/Create",
+        url: "/MasterBatchFile/Create",
         data: {
             __RequestVerificationToken: token,
-            masterSRO: sroObj
+            masterBatchFile: batchFileObj
         },
         type: "POST",
         dataType: "JSON",
@@ -62,17 +62,17 @@ function addMasterSRO() {
             /* Jika Berhasil Melewati Validasi ModelState */
             if (result.status === true) {
                 /* Menutup Utility Modal */
-                $("#MasterSROModal").modal("hide");
+                $("#MasterBatchFileModal").modal("hide");
 
                 /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
-                $('#MasterSRODatatables').dataTable().fnDestroy();
+                $("#MasterBatchFileDatatables").dataTable().fnDestroy();
 
                 /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Ditambahkan  */
-                listMasterSro();
+                listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Ditambahkan */
-                toastr.success("Penambahan Data Master SRO Berhasil !",
-                    "Master SRO dengan nama " + sroObj.name + " berhasil ditambahkan.");
+                toastr.success("Penambahan Data Master BatchFile Berhasil !",
+                    "Master BatchFile dengan path " + batchFileObj.Name + " berhasil ditambahkan.");
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
             else {
@@ -86,27 +86,27 @@ function addMasterSRO() {
     });
 }
 
-/* Fungsi Untuk Merubah Sebuah Data Master Template File */
-function updateMasterSRO() {
-    var form = $('#MasterSROForm');
+/* Fungsi Untuk Merubah Sebuah Data Master BatchFile */
+function updateMasterBatchFile() {
+    var form = $("#MasterBatchFileForm");
 
     /* Variabel Untuk Menyimpan CSRF Token */
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
     /* Variabel Dalam Bentuk Objek Untuk Menyimpan Hasil Input Dari User
-     * Terkait Data Master SRO Yang Akan Dirubah 
+     * Terkait Data Master BatchFile Yang Akan Dirubah
      */
-    var sroObj = {
+    var batchFileObj = {
         "Id": $("#id").val(),
         "Name": $("#name").val()
     };
 
     /* Operasi AJAX Untuk Update Master SRO */
     $.ajax({
-        url: "/MasterSRO/Update",
+        url: "/MasterBatchFile/Update",
         data: {
             __RequestVerificationToken: token,
-            masterSRO: sroObj
+            masterBatchFile: batchFileObj
         },
         type: "POST",
         dataType: "JSON",
@@ -117,17 +117,17 @@ function updateMasterSRO() {
             if (result.status === true) {
 
                 /* Menutup Utility Modal */
-                $("#MasterSROModal").modal("hide");
+                $("#MasterBatchFileModal").modal("hide");
 
                 /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
-                $("#MasterSRODatatables").dataTable().fnDestroy();
+                $("#MasterBatchFileDatatables").dataTable().fnDestroy();
 
                 /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Dirubah  */
-                listMasterSro();
+                listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dirubah */
-                toastr.success("Penyuntingan Data Master SRO Berhasil !",
-                    "Master SRO dengan nama " + sroObj.Name + " berhasil dirubah.");
+                toastr.success("Penyuntingan Data Master BatchFile Berhasil !",
+                    "Master BatchFile dengan nama " + batchFileObj.Name + " berhasil dirubah.");
 
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
@@ -144,30 +144,30 @@ function updateMasterSRO() {
     });
 }
 
-/* Fungsi Untuk Memanggil Modal Utility Untuk Kebutuhan RUD(Read, Update, Delete) Dari Master SRO */
-function getMasterSRO(type, id) {
-    /* Operasi AJAX Memanggil Modal Utility Sesuai Dengan Kebutuhan RUD(Read, Update, Delete) Dari Master SRO */
+/* Fungsi Untuk Memanggil Modal Utility Untuk Kebutuhan RUD(Read, Update, Delete) Dari Master BatchFile */
+function getMasterBatchFile(type, id) {
+    /* Operasi AJAX Memanggil Modal Utility Sesuai Dengan Kebutuhan RUD(Read, Update, Delete) Dari Master BatchFile */
     $.ajax({
-        url: "/MasterSRO/GetSro?sroId=" + id,
+        url: "/MasterBatchFile/GetBatchFile?batchFileId=" + id,
         type: "GET",
         contentType: "application/json;charset=UTF-8",
         dataType: "JSON",
         success: function (result) {
             $.each(result, function (index, value) {
                 $("#id").val(value.Id);
-                $("#name").val(value.Name);
+                $("#name").val(value.PathName);
             });
 
             /* Munculkan Utility Modal */
-            $("#MasterSROModal").modal("show");
+            $("#MasterBatchFileModal").modal("show");
 
-            /* Jika Type = 1 Maka Utility Modal Ditampilkan Untuk Operasi Update Dari Sebuah Data Master SRO */
+            /* Jika Type = 1 Maka Utility Modal Ditampilkan Untuk Operasi Update Dari Sebuah Data Master BatchFile */
             if (type === 1) {
                 /* Panggil Fungsi Untuk Mengaktifkan Semua Form Field */
                 enabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Formulir Penyuntingan Data Master SRO");
+                $("#modalTitle").text("Formulir Penyuntingan Data Master BatchFile");
 
                 /* Menampilkan Tombol Update */
                 $("#btnUpdate").show();
@@ -178,13 +178,13 @@ function getMasterSRO(type, id) {
                 /* Menghilangkan Tombol Add */
                 $("#btnAdd").hide();
             }
-            /* Jika Type = 2 Maka Utility Modal Ditampilkan Untuk Operasi Read Detail Dari Sebuah Data Master SRO */
+            /* Jika Type = 2 Maka Utility Modal Ditampilkan Untuk Operasi Read Detail Dari Sebuah Data Master BatchFile */
             else if (type === 2) {
                 /* Panggil Fungsi Untuk Menonaktifkan Semua Form Field */
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Detail Data Master SRO");
+                $("#modalTitle").text("Detail Data Master BatchFile");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -195,13 +195,13 @@ function getMasterSRO(type, id) {
                 /* Menghilangkan Tombol Add */
                 $("#btnAdd").hide();
             }
-            /* Jika Type = 3 Maka Utility Modal Ditampilkan Untuk Operasi Delete Dari Sebuah Data Master SRO */
+            /* Jika Type = 3 Maka Utility Modal Ditampilkan Untuk Operasi Delete Dari Sebuah Data Master BatchFile */
             else {
                 /* Panggil Fungsi Untuk Menonaktifkan Semua Form Field */
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master SRO Ini ?");
+                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master BatchFile Ini ?");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -222,24 +222,24 @@ function getMasterSRO(type, id) {
 }
 
 /* Fungsi Untuk Menghapus Sebuah Data Dari Master SRO */
-function deleteMasterSRO() {
-    var form = $("#MasterSROForm");
+function deleteMasterBatchFile() {
+    var form = $("#MasterBatchFileForm");
 
     /* Variabel Untuk Menyimpan CSRF Token */
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
-    /* Variabel Untuk Menyimpan Sro Id Yang Ingin Dihapus */
-    var sroId = $("#id").val();
+    /* Variabel Untuk Menyimpan BatchFile Id Yang Ingin Dihapus */
+    var batchFileId = $("#id").val();
 
-    /* Variabel Untuk Menyimpan Sro Name Yang Ingin Dihapus */
-    var sroName = $("#name").val();
+    /* Variabel Untuk Menyimpan BatchFile Name Yang Ingin Dihapus */
+    var batchFileName = $("#name").val();
 
-    /* Operasi AJAX Untuk Delete Master SRO */
+    /* Operasi AJAX Untuk Delete Master BatchFile */
     $.ajax({
-        url: "/MasterSRO/Delete",
+        url: "/MasterBatchFile/Delete",
         data: {
             __RequestVerificationToken: token,
-            sroId: sroId
+            batchFileId: batchFileId
         },
         type: "POST",
         dataType: "JSON",
@@ -249,17 +249,17 @@ function deleteMasterSRO() {
             if (result.status) {
 
                 /* Menutup Utility Modal */
-                $("#MasterSROModal").modal("hide");
+                $("#MasterBatchFileModal").modal("hide");
 
-                /* Menghapus Datatable Master SRO Untuk Persiapan Reset Datatable */
-                $("#MasterSRODatatables").dataTable().fnDestroy();
+                /* Menghapus Datatable Master BatchFile Untuk Persiapan Reset Datatable */
+                $("#MasterBatchFileDatatables").dataTable().fnDestroy();
 
-                /* Menampilkan Kembali Datatable Master SRO Dengan Data Yang Baru Dihapus  */
-                listMasterSro();
+                /* Menampilkan Kembali Datatable Master BatchFile Dengan Data Yang Baru Dihapus  */
+                listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dihapus */
-                toastr.success("Data Master SRO Berhasil Dihapus !",
-                    "Master SRO dengan nama " + sroName + " berhasil dihapus.");
+                toastr.success("Data Master BatchFile Berhasil Dihapus !",
+                    "Master BatchFile dengan path " + batchFileName + " berhasil dihapus.");
             }
         },
         error: function (errorMessage) {
@@ -268,11 +268,11 @@ function deleteMasterSRO() {
     });
 }
 
-/* Fungsi Untuk Menyiapkan Utility Modal Untuk Proses Create Sebuah Data Master SRO Baru */
+/* Fungsi Untuk Menyiapkan Utility Modal Untuk Proses Create Sebuah Data Master BatchFile Baru */
 function clearTextBox() {
 
     /* Mengganti Judul Utility Modal */
-    $("#modalTitle").text("Formulir Penambahan Data Master SRO");
+    $("#modalTitle").text("Formulir Penambahan Data Master BatchFile");
 
     /* Mengosongkan Field Id */
     $("#id").val("");

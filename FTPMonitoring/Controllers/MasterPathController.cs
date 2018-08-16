@@ -25,17 +25,26 @@ namespace FTPMonitoring.Controllers
         {
             using (_con)
             {
-                var listPath = _con.MasterPaths.OrderBy(s => s.Name).Select(x => new { Id = x.Id, Name = x.Name }).ToList();
+                var listPath = _con.MasterPaths.OrderBy(x => x.Name).
+	                Select(x => new
+	                {
+		                Id = x.Id,
+		                Name = x.Name
+	                }).ToList();
                 return Json(new { data = listPath }, JsonRequestBehavior.AllowGet);
             }
         }
         [WebMethod]
-        public JsonResult GetPath(int statId)
+        public JsonResult GetPath(int pathId)
         {
             using (_con)
             {
-                var status = _con.MasterPaths.FirstOrDefault(s => s.Id == statId);
-                return Json(new { data = status });
+                var path = _con.MasterPaths.Where(x => x.Id == pathId).Select(x => new
+                {
+					Id = x.Id,
+					Name = x.Name
+                }).First();
+                return Json(new { data = path }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -74,10 +83,10 @@ namespace FTPMonitoring.Controllers
             {
                 using (_con)
                 {
-                    var stat = _con.MasterPaths.FirstOrDefault(s => s.Id == masterPath.Id);
-                    if (stat != null)
+                    var path = _con.MasterPaths.FirstOrDefault(x => x.Id == masterPath.Id);
+                    if (path != null)
                     {
-                        stat.Name = masterPath.Name;
+                        path.Name = masterPath.Name;
                     }
                     _con.SaveChanges();
                     status = true;
@@ -98,12 +107,12 @@ namespace FTPMonitoring.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int statId)
+        public ActionResult Delete(int pathId)
         {
             bool status = false;
             using (_con)
             {
-                var masterPath = _con.MasterPaths.FirstOrDefault(s => s.Id == statId);
+                var masterPath = _con.MasterPaths.FirstOrDefault(s => s.Id == pathId);
                 if (masterPath != null)
                 {
                     _con.MasterPaths.Remove(masterPath);
