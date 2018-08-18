@@ -19,6 +19,7 @@ namespace FTPMonitoring.Controllers
         {
             return View();
         }
+		[WebMethod]
 	    public JsonResult ListMonitoringLog(int sroId)
 	    {
 		    using (_con)
@@ -37,7 +38,7 @@ namespace FTPMonitoring.Controllers
 				return Json(new {data = listMonitoringLogs}, JsonRequestBehavior.AllowGet);
 			}
 	    }
-
+		[WebMethod]
 	    public JsonResult GetMonitoringLogDetail(int monitoringLogId)
 	    {
 		    using (_con)
@@ -53,7 +54,7 @@ namespace FTPMonitoring.Controllers
 			    return Json(new { data = monitoringLogDetail }, JsonRequestBehavior.AllowGet);
 			}
 	    }
-
+		[WebMethod]
 	    public JsonResult ListHistoryMonitoringLog(int fileTemplateId)
 	    {
 		    using (_con)
@@ -63,5 +64,21 @@ namespace FTPMonitoring.Controllers
 			}
 		   
 		}
+
+	    [WebMethod]
+	    public JsonResult GetHistoryMonitoringLogDetail(string fileName)
+	    {
+		    using (_con)
+		    {
+			    var historyMonitoringLogs = _con.HistoryMonitoringLogs.Where(x => x.FileName == fileName)
+				    .OrderByDescending(x => x.ETLRunDatetime).Select(x => new
+				    {
+						FileStatus = x.MasterStatu.Name,
+						ETLRunDateTime = x.ETLRunDatetime
+				    }).ToList();
+
+			    return Json(new {data = historyMonitoringLogs}, JsonRequestBehavior.AllowGet);
+		    }
+	    }
     }
 }

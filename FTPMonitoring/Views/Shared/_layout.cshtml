@@ -58,10 +58,8 @@ desired effect
 <body class="hold-transition skin-red layout-top-nav">
     <div class="wrapper">
         @RenderPage("_header.cshtml")
-        @*@RenderPage("_leftSidebar.cshtml")*@
         @RenderBody()
         @RenderPage("_footer.cshtml")
-        @*@RenderPage("_rightSidebar.cshtml")*@
     </div>
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 3 -->
@@ -79,8 +77,5 @@ desired effect
     <script src="~/Scripts/moment.min.js"></script>
     @RenderSection("Script", required:false)
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-    Both of these plugins are recommended to enhance the
-    user experience. -->
 </body>
 </html>

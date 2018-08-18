@@ -351,6 +351,7 @@
     <Content Include="Views\MasterPatternExtension\UtilitiesModal.cshtml" />
     <Content Include="Views\MonitoringConfiguration\Index.cshtml" />
     <Content Include="Views\MonitoringConfiguration\UtilitiesModal.cshtml" />
+    <Content Include="Views\FTPMonitor\History_Timeline_Modal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

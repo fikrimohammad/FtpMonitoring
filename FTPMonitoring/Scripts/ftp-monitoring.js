@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     for (var i = 1; i <= 3; i++) {
-        LoadMonitoringLogs(i);
+        loadMonitoringLogs(i);
     }
     /*setInterval("autoRefreshMonitoringLogs()", 10000);*/
 });
@@ -18,7 +18,7 @@ function initMonitoringLogs() {
     $("#KSEIMonitoringLogContainer").html("");
 }
 
-function LoadMonitoringLogs(id) {
+function loadMonitoringLogs(id) {
     var sroId = parseInt(id);
     /*var inpObj = { sroId: sroId };
     var inpParam = JSON.stringify(inpObj);*/
@@ -29,12 +29,12 @@ function LoadMonitoringLogs(id) {
         contentType: "application/json;charset=UTF-8",
         dataType: "JSON",
         success: function (result) {
-            RenderMonitoringLogView(sroId, result);
+            renderMonitoringLogView(sroId, result);
         }
     });
 }
 
-function LoadMonitoringLogDetail(id) {
+function loadMonitoringLogDetail(id) {
     var monitoringLogId = parseInt(id);
     return $.ajax({
         url: "/FtpMonitor/GetMonitoringLogDetail?monitoringLogId=" + monitoringLogId,
@@ -48,14 +48,14 @@ function LoadMonitoringLogDetail(id) {
     }).responseText;
 }
 
-function RenderMonitoringLogView(sroId, monitoringLogCollections) {
+function renderMonitoringLogView(sroId, monitoringLogCollections) {
     var monitoringLogHTML, masterFileId, fileName, fileStatus, fileDetail;
     $.each(monitoringLogCollections,
         function () {
             $.each(this,
                 function (index, value) {
                     if (value.monitoringLogDetailCount > 0) {
-                        fileDetail = JSON.parse(LoadMonitoringLogDetail(value.monitoringLogId));
+                        fileDetail = JSON.parse(loadMonitoringLogDetail(value.monitoringLogId));
                         $.each(fileDetail,
                             function (index, value) {
                                 masterFileId = value.fileTemplateId;
@@ -73,15 +73,20 @@ function RenderMonitoringLogView(sroId, monitoringLogCollections) {
                         "    <div class=\"info-box\"> " +
                         "        <span class=\"info-box-icon bg-red\"><i class=\"fa fa-files-o\"></i></span> " +
                         "        <div class=\"info-box-content\"> " +
-                        "            <span class=\"info-box-text\"> " + fileName + " </span> " +
+                        "            <span class=\"info-box-number\"> " + fileName + " </span> " +
                         "            <span class=\"info-box-text\"> " +
                         "               <div class=\"label label-info\"> " +
                                             fileStatus +
                         "               </div> " +
                         "            </span> " +
+                        "            <div class=\"progress\"> " +
+                        "               <div class=\"progress-bar progress-bar-red\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 100 %\">" +
+                        "                   <span class=\"sr-only\">100% Complete</span> " +
+                        "               </div> " +              
+                        "            </div> " +      
                         "            <span class=\"info-box-text pt-5\"> " +
-                        "               <div class=\"btn btn-danger\" onclick=\"showHistoryModal(" + masterFileId + ")\">" +
-                        "                   Lihat Historis " +
+                        "               <div class=\"btn btn-danger btn-xs\" onclick=\"showHistoryModal(" + masterFileId + ")\">" +
+                        "                   <i class=\"fa fa-history\" style=\"margin-right: 5px;\"></i> Lihat Historis " +
                         "               </div>" +
                         "            </span> " +     
                         "        </div> " +
