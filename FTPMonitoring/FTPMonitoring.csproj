@@ -225,6 +225,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\master-batch-file.js" />
     <Content Include="Scripts\master-path.js" />
+    <Content Include="Scripts\master-pattern-extension.js" />
     <Content Include="Scripts\master-sro.js" />
     <Content Include="Scripts\master-status.js" />
     <Content Include="Scripts\master-file.js" />
@@ -232,6 +233,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\monitoring-configuration.js" />
     <Content Include="Scripts\tether.js" />
     <Content Include="Scripts\tether.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -257,6 +259,7 @@
     <Compile Include="Controllers\MasterPatternExtensionController.cs" />
     <Compile Include="Controllers\MasterSROController.cs" />
     <Compile Include="Controllers\MasterStatusController.cs" />
+    <Compile Include="Controllers\MonitoringConfigurationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -266,6 +269,7 @@
     <Compile Include="Models\CreateMasterSROViewModel.cs" />
     <Compile Include="Models\CreateMasterStatusViewModel.cs" />
     <Compile Include="Models\CreateMasterFileViewModel.cs" />
+    <Compile Include="Models\CreateMonitoringConfigurationViewModel.cs" />
     <Compile Include="Models\FTPMonitoringDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -320,6 +324,7 @@
     <Compile Include="Models\UpdateMasterSROViewModel.cs" />
     <Compile Include="Models\UpdateMasterStatusViewModel.cs" />
     <Compile Include="Models\UpdateMasterFileViewModel.cs" />
+    <Compile Include="Models\UpdateMonitoringConfigurationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +349,8 @@
     <Content Include="Views\MasterPath\UtilitiesModal.cshtml" />
     <Content Include="Views\MasterPatternExtension\Index.cshtml" />
     <Content Include="Views\MasterPatternExtension\UtilitiesModal.cshtml" />
+    <Content Include="Views\MonitoringConfiguration\Index.cshtml" />
+    <Content Include="Views\MonitoringConfiguration\UtilitiesModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

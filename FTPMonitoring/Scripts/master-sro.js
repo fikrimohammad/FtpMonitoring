@@ -64,15 +64,15 @@ function addMasterSRO() {
                 /* Menutup Utility Modal */
                 $("#MasterSROModal").modal("hide");
 
-                /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
+                /* Menghapus Datatable Master SRO Untuk Persiapan Reset Datatable */
                 $('#MasterSRODatatables').dataTable().fnDestroy();
 
-                /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Ditambahkan  */
+                /* Menampilkan Kembali Datatable Master SRO Dengan Data Yang Baru Ditambahkan  */
                 listMasterSro();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Ditambahkan */
                 toastr.success("Penambahan Data Master SRO Berhasil !",
-                    "Master SRO dengan nama " + sroObj.name + " berhasil ditambahkan.");
+                    "Master SRO dengan nama " + sroObj.Name + " berhasil ditambahkan.");
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
             else {
@@ -86,9 +86,9 @@ function addMasterSRO() {
     });
 }
 
-/* Fungsi Untuk Merubah Sebuah Data Master Template File */
+/* Fungsi Untuk Merubah Sebuah Data Master SRO */
 function updateMasterSRO() {
-    var form = $('#MasterSROForm');
+    var form = $("#MasterSROForm");
 
     /* Variabel Untuk Menyimpan CSRF Token */
     var token = $('input[name="__RequestVerificationToken"]', form).val();
@@ -119,10 +119,10 @@ function updateMasterSRO() {
                 /* Menutup Utility Modal */
                 $("#MasterSROModal").modal("hide");
 
-                /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
+                /* Menghapus Datatable Master SRO Untuk Persiapan Reset Datatable */
                 $("#MasterSRODatatables").dataTable().fnDestroy();
 
-                /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Dirubah  */
+                /* Menampilkan Kembali Datatable Master SRO Dengan Data Yang Baru Dirubah  */
                 listMasterSro();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dirubah */

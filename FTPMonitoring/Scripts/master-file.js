@@ -1,9 +1,11 @@
 ﻿$(document).ready(function() {
-    listMasterSro();
+    listMasterFile();
+    /* Mengosongkan Field SRO Selector */
+    $("#sroSelector").find("option").remove().end();
 });
 
 /* Fungsi Untuk Memanggil Datatable Master Template File */
-function listMasterSro() {
+function listMasterFile() {
     $("#MasterFileDatatables").dataTable({
         language: {
             searchPlaceholder: "Cari Nama Template File"
@@ -70,11 +72,11 @@ function addMasterFile() {
                 $('#MasterFileDatatables').dataTable().fnDestroy();
 
                 /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Ditambahkan  */
-                listMasterSro();
+                listMasterFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Ditambahkan */
-                toastr.success("Penambahan Data Master File Berhasil !",
-                    "Master File dengan nama " + fileObj.name + " berhasil ditambahkan.");
+                toastr.success("Penambahan Data Master Template File Berhasil !",
+                    "Master Template File dengan nama " + fileObj.Name + " berhasil ditambahkan.");
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
             else {
@@ -90,7 +92,7 @@ function addMasterFile() {
 
 /* Fungsi Untuk Merubah Sebuah Data Master Template File */
 function updateMasterFile() {
-    var form = $('#MasterFileForm');
+    var form = $("#MasterFileForm");
 
     /* Variabel Untuk Menyimpan CSRF Token */
     var token = $('input[name="__RequestVerificationToken"]', form).val();
@@ -126,11 +128,11 @@ function updateMasterFile() {
                 $("#MasterFileDatatables").dataTable().fnDestroy();
 
                 /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Dirubah  */
-                listMasterSro();
+                listMasterFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dirubah */
-                toastr.success("Penyuntingan Data Master File Berhasil !",
-                    "Master File dengan nama " + fileObj.Name + " berhasil dirubah.");
+                toastr.success("Penyuntingan Data Master Template File Berhasil !",
+                    "Master Template File dengan nama " + fileObj.Name + " berhasil dirubah.");
 
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
@@ -150,12 +152,11 @@ function updateMasterFile() {
 /* Fungsi Untuk Memanggil Modal Utility Untuk Kebutuhan RUD(Read, Update, Delete) Dari Master Template File */
 function getMasterFile(type, id) {
 
-    /* Mengosongkan SRO Selector pada Modal Utility */
-    $("#sroSelector").find("option").remove().end();
-
-    /* Mengisi SRO Selector pada Modal Utility */
-    appendSelectOptionSroId();
-
+    if ($("#sroSelector").has("option").length < 1) {
+        /* Mengisi SRO Selector pada Modal Utility */
+        appendSelectOptionSroId();
+    }
+    
     /* Operasi AJAX Memanggil Modal Utility Sesuai Dengan Kebutuhan RUD(Read, Update, Delete) Dari Master Template File */
     $.ajax({
         url: "/MasterFile/GetMasterTemplateFile?fileTemplateId=" + id,
@@ -178,7 +179,7 @@ function getMasterFile(type, id) {
                 enabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Formulir Penyuntingan Data Master File");
+                $("#modalTitle").text("Formulir Penyuntingan Data Master Template File");
 
                 /* Menampilkan Tombol Update */
                 $("#btnUpdate").show();
@@ -195,7 +196,7 @@ function getMasterFile(type, id) {
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Detail Data Master File");
+                $("#modalTitle").text("Detail Data Master Template File");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -212,7 +213,7 @@ function getMasterFile(type, id) {
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master File Ini ?");
+                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master Template File Ini ?");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -266,7 +267,7 @@ function deleteMasterFile() {
                 $("#MasterFileDatatables").dataTable().fnDestroy();
 
                 /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Dihapus  */
-                listMasterSro();
+                listMasterFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dihapus */
                 toastr.success("Data Master File Berhasil Dihapus !",
@@ -283,7 +284,10 @@ function deleteMasterFile() {
 function clearTextBox() {
 
     /* Mengganti Judul Utility Modal */
-    $("#modalTitle").text("Formulir Penambahan Data Master File");
+    $("#modalTitle").text("Formulir Penambahan Data Master Template File");
+
+    /* Mengosongkan Field Id */
+    $("#id").val("");
 
     /* Mengosongkan Field Nama */
     $("#name").val("");
@@ -313,7 +317,8 @@ function appendSelectOptionSroId() {
         url: "/MasterSRO/ListSro",
         type: "GET",
         dataType: "JSON",
-        success: function(result) {
+        success: function (result) {
+            $("#sroSelector").append($("<option></option>").text("Pilih SRO Yang Bersangkutan"));
             $.each(result, function (key, value) {
                 $.each(this, function(key, value) {
                     $("#sroSelector").append($("<option></option>").attr("value", value.Id).text(value.Name));

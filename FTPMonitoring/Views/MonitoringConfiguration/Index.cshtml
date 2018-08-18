@@ -39,7 +39,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/FTPMonitor/Index"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Pengelolaan Data Master Status</li>
+            <li class="active">Pengelolaan Data Konfigurasi Monitoring</li>
         </ol>
     </section>
 
@@ -50,21 +50,22 @@
                 <div class="box box-danger">
                     <div class="box-header">
                         <div class="row">
-                            <div class="col-xs-6"><h3 class="box-title">Pengelolaan Data Master Status</h3></div>
+                            <div class="col-xs-6"><h3 class="box-title">Pengelolaan Data Konfigurasi Monitoring</h3></div>
                         </div>
                     </div>
                     <div class="box-body">
-                        <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#MasterStatusModal" onclick="clearTextBox();" style="margin-bottom: 15px;">
-                            <i class="fa fa-plus-square" style="margin-right: 5px;"></i> Tambah Data Master Status
+                        <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#MonitoringConfigurationModal" onclick="clearTextBox();" style="margin-bottom: 15px;">
+                            <i class="fa fa-plus-square" style="margin-right: 5px;"></i> Tambah Data Konfigurasi Monitoring
                         </button>
-                        <table id="MasterStatusDatatables" class="table table-bordered table-hover">
+                        <table id="MonitoringConfigurationDatatables" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th>ID Status</th>
-                                <th>Nama Status</th>   
-                                <th>Pola Ekstensi File Yang Digunakan</th>                      
-                                <th>Aksi</th>
-                            </tr>
+                                <tr>
+                                    <th>ID Konfigurasi Monitoring</th>
+                                    <th>Nama Status</th>
+                                    <th>Path Yang Dimonitoring</th>
+                                    <th>Path Batch File Yang Digunakan</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                         </table>
                     </div>
@@ -80,5 +81,5 @@
 
 @section Script
 {
-    <script type="text/javascript" src="~/Scripts/master-status.js"></script>
+    <script type="text/javascript" src="~/Scripts/monitoring-configuration.js"></script>
 }

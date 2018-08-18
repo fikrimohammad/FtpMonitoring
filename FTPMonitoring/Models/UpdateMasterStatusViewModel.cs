@@ -9,13 +9,15 @@ namespace FTPMonitoring.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public Nullable<int> PatternExtensionId { get; set; }
 
 		public static implicit operator UpdateMasterStatusViewModel(MasterStatu masterStatus)
 		{
 			return new UpdateMasterStatusViewModel
 			{
 				Id = masterStatus.Id,               
-                Name = masterStatus.Name
+                Name = masterStatus.Name,
+				PatternExtensionId = masterStatus.PatternExtensionId
 			};
 		}
 		public static implicit operator MasterStatu(UpdateMasterStatusViewModel masterStatus)
@@ -23,7 +25,8 @@ namespace FTPMonitoring.Models
 			return new MasterStatu
 			{
 				Id = masterStatus.Id,
-                Name = masterStatus.Name
+                Name = masterStatus.Name,
+				PatternExtensionId = masterStatus.PatternExtensionId
 			};
 		}
 	}

@@ -20,12 +20,18 @@ namespace FTPMonitoring.Controllers
         {
             return View();
         }
-        [HttpGet]
+        [WebMethod]
         public JsonResult ListStatus()
         {
             using (_con)
             {
-                var listStatus = _con.MasterStatus.OrderBy(s => s.Name).Select(x => new { Id = x.Id, Name = x.Name }).ToList();
+                var listStatus = _con.MasterStatus.OrderBy(x => x.Name).
+	                Select(x => new
+	                {
+		                Id = x.Id,
+		                Name = x.Name,
+						PatternExtensionName = x.MasterPatternExtension.Name
+	                }).ToList();
                 return Json(new { data = listStatus }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -34,8 +40,14 @@ namespace FTPMonitoring.Controllers
         {
             using (_con)
             {
-                var status = _con.MasterStatus.FirstOrDefault(s => s.Id == statId);
-                return Json(new { data = status });
+                var status = _con.MasterStatus.Where(x => x.Id == statId).
+	                Select(x => new
+	                {
+						Id = x.Id,
+						Name = x.Name,
+						PatternExtensionId = x.MasterPatternExtension.Id
+	                }).First();
+                return Json(new { data = status }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -78,6 +90,7 @@ namespace FTPMonitoring.Controllers
                     if (stat != null)
                     {
                         stat.Name = masterStatus.Name;
+	                    stat.PatternExtensionId = masterStatus.PatternExtensionId;
                     }
                     _con.SaveChanges();
                     status = true;
@@ -103,7 +116,7 @@ namespace FTPMonitoring.Controllers
             bool status = false;
             using (_con)
             {
-                var masterStatus = _con.MasterStatus.FirstOrDefault(s => s.Id == statId);
+                var masterStatus = _con.MasterStatus.FirstOrDefault(x => x.Id == statId);
                 if (masterStatus != null)
                 {
                     _con.MasterStatus.Remove(masterStatus);

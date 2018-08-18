@@ -68,32 +68,25 @@ function RenderMonitoringLogView(sroId, monitoringLogCollections) {
                         fileName = value.fileTemplateName;
                         fileStatus = "Tidak Ada Proses Monitoring";
                     }
-                    monitoringLogHTML = " <div class=\"col-md-3 text-center\"> " +
-                        "     <div class=\"row pt-5\"> " +
-                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"> " +
-                                    fileName +
-                        "         </div> " +
-                        "     </div>" +
-                        "     <div class=\"row pt-5\"> " +
-                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"> " +
-                        "             <i class=\"fa fa-file-zip-o fa-3x\")></i></br>" +
-                        "         </div> " +
-                        "     </div>" +
-                        "     <div class=\"row pt-5\"> " +
-                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 \"> " +
-                        "             <div class=\"label label-info\"> " +
-                                        fileStatus +
-                        "             </div>" +
-                        "         </div> " +
-                        "     </div>" +
-                        "     <div class=\"row pt-5\"> " +
-                        "         <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 \"> " +
-                        "             <div class=\"btn btn-danger\" onclick=\"showHistoryModal(" + masterFileId + ")\">" +
-                        "               Lihat Historis " +        
-                        "             </div>" +
-                        "         </div> " +
-                        "     </div>" +
-                        "  </div> ";
+                    monitoringLogHTML =
+                        " <div class=\"col-md-4\"> " +
+                        "    <div class=\"info-box\"> " +
+                        "        <span class=\"info-box-icon bg-red\"><i class=\"fa fa-files-o\"></i></span> " +
+                        "        <div class=\"info-box-content\"> " +
+                        "            <span class=\"info-box-text\"> " + fileName + " </span> " +
+                        "            <span class=\"info-box-text\"> " +
+                        "               <div class=\"label label-info\"> " +
+                                            fileStatus +
+                        "               </div> " +
+                        "            </span> " +
+                        "            <span class=\"info-box-text pt-5\"> " +
+                        "               <div class=\"btn btn-danger\" onclick=\"showHistoryModal(" + masterFileId + ")\">" +
+                        "                   Lihat Historis " +
+                        "               </div>" +
+                        "            </span> " +     
+                        "        </div> " +
+                        "    </div> " +
+                        " </div> ";
                     if (sroId === 1) {
                         $("#BEIMonitoringLogContainer").append(monitoringLogHTML);
                     } else if (sroId === 2) {

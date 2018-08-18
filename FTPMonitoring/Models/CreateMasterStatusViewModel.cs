@@ -8,19 +8,22 @@ namespace FTPMonitoring.Models
 	public class CreateMasterStatusViewModel
 	{
 		public string Name { get; set; }
+		public Nullable<int> PatternExtensionId { get; set; }
 
 		public static implicit operator CreateMasterStatusViewModel(MasterStatu masterStatus)
 		{
 			return new CreateMasterStatusViewModel
 			{               
-				Name = masterStatus.Name
+				Name = masterStatus.Name,
+				PatternExtensionId = masterStatus.PatternExtensionId
 			};
 		}
 		public static implicit operator MasterStatu(CreateMasterStatusViewModel createMasterStatusViewModel)
 		{
 			return new MasterStatu
 			{                
-                Name = createMasterStatusViewModel.Name
+                Name = createMasterStatusViewModel.Name,
+				PatternExtensionId = createMasterStatusViewModel.PatternExtensionId
 			};
 		}
 	}

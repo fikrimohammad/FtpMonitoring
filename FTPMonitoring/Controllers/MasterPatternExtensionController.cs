@@ -25,17 +25,27 @@ namespace FTPMonitoring.Controllers
         {
             using (_con)
             {
-                var listPatternExtension = _con.MasterPatternExtensions.OrderBy(s => s.Name).Select(x => new { Id = x.Id, Name = x.Name }).ToList();
+                var listPatternExtension = _con.MasterPatternExtensions.OrderBy(x => x.Name).
+	                Select(x => new
+	                {
+		                Id = x.Id,
+		                Name = x.Name
+	                }).ToList();
                 return Json(new { data = listPatternExtension }, JsonRequestBehavior.AllowGet);
             }
         }
         [WebMethod]
-        public JsonResult GetPatternExtension(int statId)
+        public JsonResult GetPatternExtension(int patternExtensionId)
         {
             using (_con)
             {
-                var status = _con.MasterPatternExtensions.FirstOrDefault(s => s.Id == statId);
-                return Json(new { data = status });
+                var patternExtension = _con.MasterPatternExtensions.Where(x => x.Id == patternExtensionId).
+	                Select(x => new
+	                {
+						Id = x.Id,
+						Name = x.Name
+	                }).First();
+                return Json(new { data = patternExtension }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -74,10 +84,10 @@ namespace FTPMonitoring.Controllers
             {
                 using (_con)
                 {
-                    var stat = _con.MasterPatternExtensions.FirstOrDefault(s => s.Id == masterPatternExtension.Id);
-                    if (stat != null)
+                    var patternExtension = _con.MasterPatternExtensions.FirstOrDefault(x => x.Id == masterPatternExtension.Id);
+                    if (patternExtension != null)
                     {
-                        stat.Name = masterPatternExtension.Name;
+                        patternExtension.Name = masterPatternExtension.Name;
                     }
                     _con.SaveChanges();
                     status = true;
@@ -98,12 +108,12 @@ namespace FTPMonitoring.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int statId)
+        public ActionResult Delete(int patternExtensionId)
         {
             bool status = false;
             using (_con)
             {
-                var masterPatternExtension = _con.MasterPatternExtensions.FirstOrDefault(s => s.Id == statId);
+                var masterPatternExtension = _con.MasterPatternExtensions.FirstOrDefault(x => x.Id == patternExtensionId);
                 if (masterPatternExtension != null)
                 {
                     _con.MasterPatternExtensions.Remove(masterPatternExtension);

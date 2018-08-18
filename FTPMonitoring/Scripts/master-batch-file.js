@@ -64,15 +64,15 @@ function addMasterBatchFile() {
                 /* Menutup Utility Modal */
                 $("#MasterBatchFileModal").modal("hide");
 
-                /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
+                /* Menghapus Datatable Master BatchFile Untuk Persiapan Reset Datatable */
                 $("#MasterBatchFileDatatables").dataTable().fnDestroy();
 
-                /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Ditambahkan  */
+                /* Menampilkan Kembali Datatable Master BatchFile Dengan Data Yang Baru Ditambahkan  */
                 listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Ditambahkan */
-                toastr.success("Penambahan Data Master BatchFile Berhasil !",
-                    "Master BatchFile dengan path " + batchFileObj.Name + " berhasil ditambahkan.");
+                toastr.success("Penambahan Data Master Batch File Berhasil !",
+                    "Master Batch File dengan path " + batchFileObj.Name + " berhasil ditambahkan.");
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
             else {
@@ -119,15 +119,15 @@ function updateMasterBatchFile() {
                 /* Menutup Utility Modal */
                 $("#MasterBatchFileModal").modal("hide");
 
-                /* Menghapus Datatable Master Template File Untuk Persiapan Reset Datatable */
+                /* Menghapus Datatable Master BatchFile Untuk Persiapan Reset Datatable */
                 $("#MasterBatchFileDatatables").dataTable().fnDestroy();
 
-                /* Menampilkan Kembali Datatable Master Template File Dengan Data Yang Baru Dirubah  */
+                /* Menampilkan Kembali Datatable Master BatchFile Dengan Data Yang Baru Dirubah  */
                 listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dirubah */
-                toastr.success("Penyuntingan Data Master BatchFile Berhasil !",
-                    "Master BatchFile dengan nama " + batchFileObj.Name + " berhasil dirubah.");
+                toastr.success("Penyuntingan Data Master Batch File Berhasil !",
+                    "Master Batch File dengan nama " + batchFileObj.Name + " berhasil dirubah.");
 
             }
             /* Jika Tidak Berhasil Melewati Validasi ModelState */
@@ -167,7 +167,7 @@ function getMasterBatchFile(type, id) {
                 enabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Formulir Penyuntingan Data Master BatchFile");
+                $("#modalTitle").text("Formulir Penyuntingan Data Master Batch File");
 
                 /* Menampilkan Tombol Update */
                 $("#btnUpdate").show();
@@ -184,7 +184,7 @@ function getMasterBatchFile(type, id) {
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Detail Data Master BatchFile");
+                $("#modalTitle").text("Detail Data Master Batch File");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -201,7 +201,7 @@ function getMasterBatchFile(type, id) {
                 disabledFormAllField();
 
                 /* Mengganti Judul Dari Utility Modal */
-                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master BatchFile Ini ?");
+                $("#modalTitle").text("Apakah Anda Yakin Ingin Menghapus Data Master Batch File Ini ?");
 
                 /* Menghilangkan Tombol Update */
                 $("#btnUpdate").hide();
@@ -258,8 +258,8 @@ function deleteMasterBatchFile() {
                 listMasterBatchFile();
 
                 /* Menampilkan Notifikasi Bahwa Data Berhasil Dihapus */
-                toastr.success("Data Master BatchFile Berhasil Dihapus !",
-                    "Master BatchFile dengan path " + batchFileName + " berhasil dihapus.");
+                toastr.success("Data Master Batch File Berhasil Dihapus !",
+                    "Master Batch File dengan path " + batchFileName + " berhasil dihapus.");
             }
         },
         error: function (errorMessage) {
@@ -272,7 +272,7 @@ function deleteMasterBatchFile() {
 function clearTextBox() {
 
     /* Mengganti Judul Utility Modal */
-    $("#modalTitle").text("Formulir Penambahan Data Master BatchFile");
+    $("#modalTitle").text("Formulir Penambahan Data Master Batch File");
 
     /* Mengosongkan Field Id */
     $("#id").val("");
